@@ -2,7 +2,9 @@ from flask import Flask, render_template, request
 import joblib
 import requests
 
-NEWS_API_KEY = "a95cd4c1c3394412a1eec27f72795591"
+import os
+
+NEWS_API_KEY = os.environ.get("NEWS_API_KEY")
 
 def get_news(query):
     url = (
