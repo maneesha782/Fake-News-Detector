@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake News Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>📰 Fake News Detection</h1>
+
+    <form action="/predict" method="POST">
+         <h3>Enter News Article</h3>
+        <textarea name="news" rows="10" placeholder="Paste a news headline or complete article here..." required></textarea>
+        <br>
+        <button type="submit">🔍Predict</button>
+        <button type="reset">🗑 Clear</button>
+    </form>
+
+    {% if prediction %}
+
+<div class="result {{ color }}">
+
+    <h2>Prediction Result</h2>
+
+    <h1>{{ prediction }}</h1>
+
+    <p>{{ message }}</p>
+
+    <h3>Confidence : {{ confidence }}%</h3>
+
+    <div class="progress">
+        <div class="progress-bar" style="width: {{ confidence }}%;"></div>
+    </div>
+
+</div>
+
+{% endif %}
+
+<hr>
+
+<h2>📰 Explore Local News</h2>
+<p>Select a location to view the latest live news.</p>
+
+<form action="/search_news" method="POST">
+
+    <h3>Quick Select</h3>
+
+    <select name="location">
+        <option value="">-- Select Location --</option>
+        <option value="Hyderabad">Hyderabad</option>
+        <option value="Vijayawada">Vijayawada</option>
+        <option value="Visakhapatnam">Visakhapatnam</option>
+        <option value="Tirupati">Tirupati</option>
+        <option value="Guntur">Guntur</option>
+        <option value="Warangal">Warangal</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Bangalore">Bangalore</option>
+        <option value="Mumbai">Mumbai</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Tamil Nadu">Tamil Nadu</option>
+        <option value="Maharastra">Maharastra</option>
+    </select>
+
+    <h3 style="margin-top:20px;">OR Search Any Location</h3>
+
+    <input
+        type="text"
+        name="custom_location"
+        placeholder="Enter any city, state or country">
+
+    <button type="submit">🔍 Get News</button>
+
+</form>
+
+{% if local_news %}
+
+<h3>Latest News from {{ location }}</h3>
+
+{% for news in local_news %}
+
+<div class="news-card">
+
+    <h3>{{ news.title }}</h3>
+
+    <p>{{ news.description }}</p>
+
+    <a href="{{ news.url }}" target="_blank">
+        Read Full Article →
+    </a>
+
+</div>
+
+{% endfor %}
+
+{% elif location %}
+
+<p style="color:red;">
+    ❌ No news found for "{{ location }}". Try another location.
+</p>
+
+{% endif %}
+<footer>
+    <p><strong>Mini Project</strong></p>
+    <p>Fake News Detection | Developed by</p>
+    <p><strong>Bondalapati Maneesha</strong></p>
+    <p>Department of Computer Science and Engineering</p>
+    <p>2026</p>
+
+</footer>
+</div>
+
+
+</body>
+</html>
